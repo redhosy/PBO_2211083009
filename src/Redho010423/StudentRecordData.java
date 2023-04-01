@@ -2,11 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package syauqi01042023;
+package Redho010423;
 
 /**
  *
- * @author LEGION Y540
+ * @author septa
  */
 public class StudentRecordData {
     public static void main(String[] args){
