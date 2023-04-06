@@ -17,16 +17,23 @@ public class StudentRecordExample {
         anna.setName("Anna");
         anna.setAddress("Padang");
         anna.setAge(18);
+        anna.setMathGrade(80);
+        anna.setEnglishGrade(75);
+        anna.setScienceGrade(70);
+        
         
         cris.setName("Cris");
         cris.setAddress("BukitTinggi");
         cris.setAge(20);
+    
         
         //menampilkan
         System.out.println("Data Objek Anna");
         System.out.println("Nama        :"+anna.getName());
         System.out.println("Address     :"+anna.getAddress());
         System.out.println("Age         :"+anna.getAge());
+        System.out.println("nilai rata-rata:"+anna.getAvarage());
+        System.out.println("Nilai huruf:"+anna.nilaihuruf());
         
         //memanggil method print
            System.out.println("\nData Objek Cris");
