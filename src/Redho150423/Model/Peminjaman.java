@@ -9,37 +9,29 @@ package Redho150423.Model;
  * @author septa
  */
 public class Peminjaman {
-    private String nobp;
-    private String nama;
-    private String kodebuku;
+    private Anggota anggota;
+    private Buku buku;
     private String tglpinjam;
     private String tglkembali;
     
 public Peminjaman(){}
-public Peminjaman(String nobp, String nama, String kodebuku,String tglpinjam,String tglkembali){
-       this.nobp = nobp;
-       this.nama = nama;
-       this.kodebuku = kodebuku;
+public Peminjaman(Anggota anggota, Buku buku,String tglpinjam,String tglkembali){
+       this.anggota = anggota;
+       this.buku = buku;
        this.tglpinjam = tglpinjam;
        this.tglkembali = tglkembali;
        }
-public String getnobp(){
-    return nobp;
+public Anggota getAnggota(){
+    return anggota;
     }
-public void setNobp(String nobp){
-    this.nobp = nobp;
+public void setAnggota(Anggota anggota){
+    this.anggota = anggota;
     }
-public String getNama(){
-    return nama;
+public Buku getBuku(){
+    return buku;
     }
-public void setNama(String Nama){
-    this.nama = Nama;
-    }
-public String getKodebuku(){
-    return kodebuku;
-    }
-public void setKodebuku(String kodebuku){
-    this.kodebuku = kodebuku;
+public void setBuku(Buku buku){
+    this.buku = buku;
     }
 public String gettglpinjam(){
     return tglpinjam;
