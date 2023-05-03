@@ -14,6 +14,7 @@ public class PengembalianDaolmpl implements PengembalianDao{
     
     public PengembalianDaolmpl(){
         data.add(new Pengembalian("",""));
+        data.add(new Pengembalian("",""));
     }
     public void save(Pengembalian pengembalian){
         data.add(pengembalian);
