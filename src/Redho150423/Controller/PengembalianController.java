@@ -59,8 +59,8 @@ public class PengembalianController {
         peminjamanDao.save(peminjaman);
         
         pengembalian = new Pengembalian();
-        pengembalian.setDikembalikan(formPeminjaman.getTxtTglDikembalikan().getText());
-        pengembalian.setterlambat(formPeminjaman.getTxtTglKembali().getText());
+        pengembalian.setDikembalikan("");
+        pengembalian.setterlambat("");
         pengembalian.setdenda();
         pengembalianDao.save(pengembalian);
         javax.swing.JOptionPane.showMessageDialog(formPeminjaman,  "Entry Okee");
@@ -94,11 +94,19 @@ public class PengembalianController {
         pengembalianDao.update(index,pengembalian);
          javax.swing.JOptionPane.showMessageDialog(formPeminjaman,  "Update Okee");
     }
-        public void deletePeminjaman(){
+    public void deletePeminjaman(){
         int index = formPeminjaman.getTblPeminjaman().getSelectedRow();
         peminjamanDao.delete(index);
         pengembalianDao.delete(index);
         javax.swing.JOptionPane.showMessageDialog(formPeminjaman,  "Delete Okee");
+    }
+    public void DikembalikanPeminjaman(){
+        int index = formPeminjaman.getTblPeminjaman().getSelectedRow();
+        pengembalian.setDikembalikan(formPeminjaman.getTxtTglDikembalikan().getText());
+        pengembalian.setterlambat(formPeminjaman.getTxtTglKembali().getText());
+        pengembalian.setdenda();
+        pengembalianDao.update(index, pengembalian);
+        javax.swing.JOptionPane.showMessageDialog(formPeminjaman,  "Dikembalikan ya!");
     }
          public void tampilData(){
          DefaultTableModel tabelModel = 
