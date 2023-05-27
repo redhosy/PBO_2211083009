@@ -9,12 +9,12 @@ import java.util.List;
  *
  * @author septa
  */
-public class PelangganDaolmpl {
+public class PelangganDaolmpl implements PelangganDao{
     List<Pelanggan> data = new ArrayList<>();
     
     public PelangganDaolmpl(){
         data.add(new Pelanggan("123","Ali","VIP"));
-        data.add(new Pelanggan("321","Ali","Gold"));
+        data.add(new Pelanggan("321","Asep","GOLD"));
        
     }
     
