@@ -8,16 +8,16 @@ package Redho.Model;
  *
  * @author septa
  */
-public class anggota {
+public class Anggota {
     private String kodeanggota;
     private String namaanggota;
     private String alamat;
     private String jeniskelamin;
     
     
-public anggota(){
+public Anggota(){
 }
-    public anggota(String kodeanggota, String namaanggota, String alamat, String jeniskelamin) {
+    public Anggota(String kodeanggota, String namaanggota, String alamat, String jeniskelamin) {
         this.kodeanggota = kodeanggota;
         this.namaanggota = namaanggota;
         this.alamat = alamat;

@@ -4,13 +4,13 @@
  */
 package Redho.db;
 
-import Redho.Dao.anggotaDao;
-import Redho.Model.anggota;
-import Redho.Dao.anggotaDaolmpl;
+import Redho.Model.Anggota;
+import Redho.Dao.AnggotaDaolmpl;
 import com.mysql.cj.jdbc.MysqlDataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import Redho.Dao.AnggotaDao;
 
 /**
  *
@@ -32,8 +32,8 @@ public class dbHelper {
     public static void main(String[] args) {
         try {
             connection = dbHelper.getConnection();
-            anggotaDao dao = new anggotaDaolmpl(connection);
-            anggota Anggota = new anggota("A001","Ali","Padang","L");
+            AnggotaDao dao = new AnggotaDaolmpl(connection);
+            Anggota Anggota = new Anggota("002","Asep","Padang","L");
             dao.insert(Anggota);
             JOptionPane.showMessageDialog(null, "entry ok");
         } catch (Exception ex) {

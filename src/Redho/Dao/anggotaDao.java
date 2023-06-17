@@ -4,12 +4,17 @@
  */
 package Redho.Dao;
 
-import Redho.Model.anggota;
-
+import Redho.Model.*;
+import java.util.List;
 /**
  *
  * @author septa
  */
-public interface anggotaDao {
-    void insert (anggota Anggota) throws Exception;
+
+public interface AnggotaDao {
+    void insert (Anggota anggota) throws Exception;
+    void update (Anggota anggota) throws Exception;
+    void delete (Anggota anggota) throws Exception;
+    Anggota getAnggota(String kodeanggota)throws Exception;
+    List<Anggota> getAll() throws Exception;
 }
