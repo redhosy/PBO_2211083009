@@ -20,35 +20,36 @@ public class AnggotaDaolmpl implements AnggotaDao{
     }
     
      public void insert (Anggota Anggota) throws Exception{
-     String sql = "insert into anggota values(?,?,?,?)";
-     PreparedStatement ps = connection.prepareStatement(sql);
-     ps.setString(1,Anggota.getKodeanggota());
-     ps.setString(2,Anggota.getNamaanggota());
-     ps.setString(3,Anggota.getAlamat());
-     ps.setString(4,Anggota.getJeniskelamin());
-     ps.executeUpdate();
-     ps.close();  
+        String sql = "insert into anggota values(?,?,?,?)";
+        PreparedStatement ps = connection.prepareStatement(sql);
+        ps.setString(1,Anggota.getKodeanggota());
+        ps.setString(2,Anggota.getNamaanggota());
+        ps.setString(3,Anggota.getAlamat());
+        ps.setString(4,Anggota.getJeniskelamin());
+        ps.executeUpdate();
+        ps.close();  
      }   
      
      public void update(Anggota anggota)throws Exception{
-         String sql = "Update anggota SET namaAnggota = ?, alamat = ?, jeniskelamin = ? "
+         String sql = "Update anggota SET namaAnggota = ?, alamat = ?, jenisKelamin = ?"
                  + "WHERE kodeAnggota = ?";
          PreparedStatement ps = connection.prepareStatement(sql);
-         ps.setString(1, anggota.getKodeanggota());
-         ps.setString(2, anggota.getNamaanggota());
-         ps.setString(3, anggota.getAlamat());
-         ps.setString(4, anggota.getJeniskelamin());
+         ps.setString(1, anggota.getNamaanggota());
+         ps.setString(2, anggota.getAlamat());
+         ps.setString(3, anggota.getJeniskelamin());
+         ps.setString(4, anggota.getKodeanggota());
          ps.executeUpdate();
          ps.close();
      }
      
-     @Override
+     
      public void delete(Anggota anggota) throws Exception{
-         String sql = "DELETE FROM anggota WHERE kodeanggota = ?";
+         String sql = "DELETE FROM anggota WHERE kodeAnggota = ?";
          PreparedStatement ps = connection.prepareStatement(sql);
          ps.setString(1, anggota.getKodeanggota());
          ps.executeUpdate();
      }
+     
      public Anggota getAnggota(String kodeanggota) throws Exception {
          String sql = "select * FROM anggota WHERE kodeAnggota =?";
          PreparedStatement ps = connection.prepareStatement(sql);

@@ -216,9 +216,9 @@ public class FormAnggota extends javax.swing.JFrame {
 
     private void btndeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btndeleteActionPerformed
         // TODO add your handling code here:
+        controller.delete();
         controller.tampil();
         controller.bersihForm();
-        controller.delete();
     }//GEN-LAST:event_btndeleteActionPerformed
 
     private void txtkodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtkodeActionPerformed

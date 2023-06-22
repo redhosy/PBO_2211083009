@@ -11,6 +11,8 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import Redho.Dao.AnggotaDao;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -33,7 +35,7 @@ public class dbHelper {
         try {
             connection = dbHelper.getConnection();
             AnggotaDao dao = new AnggotaDaolmpl(connection);
-            Anggota Anggota = new Anggota("002","Asep","Padang","L");
+            Anggota Anggota = new Anggota("001","Ali","Padang","L");
             dao.insert(Anggota);
             JOptionPane.showMessageDialog(null, "entry ok");
         } catch (Exception ex) {
