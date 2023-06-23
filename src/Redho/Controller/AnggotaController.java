@@ -97,7 +97,7 @@ public class AnggotaController{
         } catch (Exception ex) {
             Logger.getLogger(AnggotaController.class.getName()).log(Level.SEVERE, null, ex);
         }
-}
+    }
     
     public void tampil(){
         try {
