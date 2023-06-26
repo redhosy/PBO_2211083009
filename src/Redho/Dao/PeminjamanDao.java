@@ -5,16 +5,17 @@
 package Redho.Dao;
 
 import Redho.Model.*;
+import java.sql.SQLException;
 import java.util.List;
 /**
  *
  * @author septa
  */
 public interface PeminjamanDao {
-    void pinjam (Peminjaman peminjaman)throws Exception;
-    void update (Peminjaman peminjaman)throws Exception;
-    void delete (Peminjaman peminjaman)throws Exception;
-    Peminjaman getPeminjaman(String Kodepeminjaman)throws Exception;
-    List<Peminjaman> getAll() throws Exception;
+    void insert (Peminjaman peminjaman)throws SQLException;
+    void update (Peminjaman peminjaman)throws SQLException;
+    void delete (Peminjaman peminjaman)throws SQLException;
+    Peminjaman getPeminjaman(String kodeAnggota, String Kodebuku, String Tglpinjam)throws SQLException, Exception;
+    List<Peminjaman> getAll() throws SQLException;
     
 }

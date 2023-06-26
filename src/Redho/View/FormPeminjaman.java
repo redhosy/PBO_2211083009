@@ -4,6 +4,8 @@
  */
 package Redho.View;
 import Redho.Controller.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
 
 /**
@@ -15,24 +17,16 @@ public class FormPeminjaman extends javax.swing.JFrame {
     /**
      * Creates new form FormPeminjaman
      */
-    PeminjamanController con;
+    private PeminjamanController con;
     public FormPeminjaman() {
-        initComponents();
-        con = new PeminjamanController(this);
-        con.bersih();
-        con.tampil();
-    }
-    
-    public javax.swing.JTextField getTxtKodePeminjaman(){
-       return txtkodepeminjaman; 
-    }
-    
-    public javax.swing.JTextField getTxtTglKembali(){
-        return txttglkembali;
-    }
-    
-    public javax.swing.JTextField getTxtTglpinjam(){
-        return txttglpinjam;
+        try {
+            initComponents();
+            con = new PeminjamanController(this);
+            con.bersih();
+            con.tampil();
+        } catch (Exception ex) {
+            Logger.getLogger(FormPeminjaman.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     public javax.swing.JComboBox getCboKodeAnggota(){
@@ -41,6 +35,14 @@ public class FormPeminjaman extends javax.swing.JFrame {
     
     public javax.swing.JComboBox getCboKodeBuku(){
         return cbokodebuku;
+    }
+    
+    public javax.swing.JTextField getTxtTglKembali(){
+        return txttglkembali;
+    }
+    
+    public javax.swing.JTextField getTxtTglpinjam(){
+        return txttglpinjam;
     }
     
     public javax.swing.JTable gettblpeminjaman(){
@@ -56,30 +58,25 @@ public class FormPeminjaman extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         cbokodeanggota = new javax.swing.JComboBox<>();
         cbokodebuku = new javax.swing.JComboBox<>();
-        txtkodepeminjaman = new javax.swing.JTextField();
         txttglpinjam = new javax.swing.JTextField();
         txttglkembali = new javax.swing.JTextField();
-        btnpinjam = new javax.swing.JButton();
+        btninsert = new javax.swing.JButton();
         btnupdate = new javax.swing.JButton();
         btndelete = new javax.swing.JButton();
         btncancel = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblpeminjaman = new javax.swing.JTable();
         jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
-
-        jLabel1.setText("Kode Peminjaman");
-        getContentPane().add(jLabel1);
-        jLabel1.setBounds(20, 30, 110, 16);
 
         jLabel2.setText("Kode Anggota");
         getContentPane().add(jLabel2);
@@ -105,26 +102,38 @@ public class FormPeminjaman extends javax.swing.JFrame {
         getContentPane().add(cbokodebuku);
         cbokodebuku.setBounds(130, 100, 190, 30);
 
-        txtkodepeminjaman.setText("jTextField1");
-        getContentPane().add(txtkodepeminjaman);
-        txtkodepeminjaman.setBounds(130, 20, 290, 30);
-
         txttglpinjam.setText("jTextField2");
+        txttglpinjam.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txttglpinjamFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txttglpinjamFocusLost(evt);
+            }
+        });
         getContentPane().add(txttglpinjam);
         txttglpinjam.setBounds(130, 142, 290, 30);
 
         txttglkembali.setText("jTextField3");
+        txttglkembali.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txttglkembaliFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txttglkembaliFocusLost(evt);
+            }
+        });
         getContentPane().add(txttglkembali);
         txttglkembali.setBounds(130, 182, 290, 30);
 
-        btnpinjam.setText("Pinjam");
-        btnpinjam.addActionListener(new java.awt.event.ActionListener() {
+        btninsert.setText("Pinjam");
+        btninsert.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnpinjamActionPerformed(evt);
+                btninsertActionPerformed(evt);
             }
         });
-        getContentPane().add(btnpinjam);
-        btnpinjam.setBounds(130, 230, 72, 23);
+        getContentPane().add(btninsert);
+        btninsert.setBounds(130, 230, 72, 23);
 
         btnupdate.setText("Update");
         btnupdate.addActionListener(new java.awt.event.ActionListener() {
@@ -155,17 +164,17 @@ public class FormPeminjaman extends javax.swing.JFrame {
 
         tblpeminjaman.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Kode Penyimpanan", "Kode Anggota", "Kode Buku", "Tgl pinjam", "Tgl Kembali"
+                "Kode Anggota", "Kode Buku", "Tgl pinjam", "Tgl Kembali"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, true, false
+                false, false, true, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -182,9 +191,13 @@ public class FormPeminjaman extends javax.swing.JFrame {
         getContentPane().add(jScrollPane1);
         jScrollPane1.setBounds(460, 60, 590, 250);
 
-        jLabel6.setText("TABEL PENYIMPANAN ");
+        jLabel6.setText("MASUKKAN DATA");
         getContentPane().add(jLabel6);
-        jLabel6.setBounds(460, 30, 130, 16);
+        jLabel6.setBounds(130, 20, 130, 16);
+
+        jLabel7.setText("TABEL PENYIMPANAN ");
+        getContentPane().add(jLabel7);
+        jLabel7.setBounds(460, 20, 130, 16);
 
         setSize(new java.awt.Dimension(1084, 468));
         setLocationRelativeTo(null);
@@ -196,30 +209,74 @@ public class FormPeminjaman extends javax.swing.JFrame {
     }//GEN-LAST:event_tblpeminjamanMouseClicked
 
     private void btndeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btndeleteActionPerformed
-        // TODO add your handling code here:
-        con.delete();
-        con.tampil();
-        con.bersih();
+        try {
+            // TODO add your handling code here:
+            con.delete();
+            con.tampil();
+            con.bersih();
+        } catch (Exception ex) {
+            Logger.getLogger(FormPeminjaman.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btndeleteActionPerformed
 
-    private void btnpinjamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnpinjamActionPerformed
-        // TODO add your handling code here:
-        con.pinjam();
-        con.tampil();
-        con.bersih();
-    }//GEN-LAST:event_btnpinjamActionPerformed
+    private void btninsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btninsertActionPerformed
+        try {
+            // TODO add your handling code here:
+            con.insert();
+            con.tampil();
+            con.bersih();
+        } catch (Exception ex) {
+            Logger.getLogger(FormPeminjaman.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btninsertActionPerformed
 
     private void btnupdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnupdateActionPerformed
-        // TODO add your handling code here:
-        con.update();
-        con.tampil();
-        con.bersih();
+        try {
+            // TODO add your handling code here:
+            con.update();
+            con.tampil();
+            con.bersih();
+        } catch (Exception ex) {
+            Logger.getLogger(FormPeminjaman.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnupdateActionPerformed
 
     private void btncancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btncancelActionPerformed
-        // TODO add your handling code here:
-        con.bersih();
+        try {
+            // TODO add your handling code here:
+            con.bersih();
+        } catch (Exception ex) {
+            Logger.getLogger(FormPeminjaman.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btncancelActionPerformed
+
+    private void txttglpinjamFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txttglpinjamFocusGained
+        // TODO add your handling code here:
+        if(txttglpinjam.getText().equals("yyyy-mm-dd")){
+            txttglpinjam.setText("");
+        }
+    }//GEN-LAST:event_txttglpinjamFocusGained
+
+    private void txttglpinjamFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txttglpinjamFocusLost
+        // TODO add your handling code here:
+        if(txttglpinjam.getText().equals("")){
+            txttglpinjam.setText("yyyy-mm-dd");
+        }
+    }//GEN-LAST:event_txttglpinjamFocusLost
+
+    private void txttglkembaliFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txttglkembaliFocusGained
+        // TODO add your handling code here:
+        if(txttglkembali.getText().equals("yyyy-mm-dd")){
+            txttglkembali.setText("");
+        }
+    }//GEN-LAST:event_txttglkembaliFocusGained
+
+    private void txttglkembaliFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txttglkembaliFocusLost
+        // TODO add your handling code here:
+        if(txttglkembali.getText().equals("")){
+            txttglkembali.setText("yyyy-mm-dd");
+        }
+    }//GEN-LAST:event_txttglkembaliFocusLost
 
     /**
      * @param args the command line arguments
@@ -259,19 +316,18 @@ public class FormPeminjaman extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btncancel;
     private javax.swing.JButton btndelete;
-    private javax.swing.JButton btnpinjam;
+    private javax.swing.JButton btninsert;
     private javax.swing.JButton btnupdate;
     private javax.swing.JComboBox<String> cbokodeanggota;
     private javax.swing.JComboBox<String> cbokodebuku;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblpeminjaman;
-    private javax.swing.JTextField txtkodepeminjaman;
     private javax.swing.JTextField txttglkembali;
     private javax.swing.JTextField txttglpinjam;
     // End of variables declaration//GEN-END:variables

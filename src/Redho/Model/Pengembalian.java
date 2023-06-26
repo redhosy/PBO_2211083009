@@ -8,23 +8,27 @@ package Redho.Model;
  *
  * @author septa
  */
-public class Peminjaman {
-    private String KodeAnggota;
-    private String Kodebuku ;
+public class Pengembalian {
+    private String kodeAnggota;
+    private String Kodebuku;
     private String tglpinjam;
     private String tglkembali;
+    private int terlambat;
+    private String denda;
     
-    public Peminjaman(){}
+    public Pengembalian(){}
 
-    public Peminjaman(String KodeAnggota, String Kodebuku, String tglpinjam, String tglkembali) {
-        this.KodeAnggota = KodeAnggota;
+    public Pengembalian(String kodeAnggota, String Kodebuku, String tglpinjam, String tglkembali, int terlambat, String denda) {
+        this.kodeAnggota = kodeAnggota;
         this.Kodebuku = Kodebuku;
         this.tglpinjam = tglpinjam;
         this.tglkembali = tglkembali;
+        this.terlambat = terlambat;
+        this.denda = denda;
     }
 
     public String getKodeAnggota() {
-        return KodeAnggota;
+        return kodeAnggota;
     }
 
     public String getKodebuku() {
@@ -39,8 +43,16 @@ public class Peminjaman {
         return tglkembali;
     }
 
-    public void setKodeAnggota(String KodeAnggota) {
-        this.KodeAnggota = KodeAnggota;
+    public int getTerlambat() {
+        return terlambat;
+    }
+
+    public String getDenda() {
+        return denda;
+    }
+
+    public void setKodeAnggota(String kodeAnggota) {
+        this.kodeAnggota = kodeAnggota;
     }
 
     public void setKodebuku(String Kodebuku) {
@@ -54,4 +66,15 @@ public class Peminjaman {
     public void setTglkembali(String tglkembali) {
         this.tglkembali = tglkembali;
     }
+
+    public void setTerlambat(int terlambat) {
+        this.terlambat = terlambat;
+    }
+
+    public void setDenda(String denda) {
+        this.denda = denda;
+    }
+    
+    
+    
 }

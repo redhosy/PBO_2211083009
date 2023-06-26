@@ -4,132 +4,128 @@
  */
 package Redho.Controller;
 
+import java.sql.Connection;
+import java.util.List;
+
+import Redho.db.dbHelper;
 import Redho.Dao.*;
 import Redho.Model.*;
-import Redho.db.dbHelper;
 import Redho.View.FormPeminjaman;
-import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 /**
  *
  * @author septa
  */
 public class PeminjamanController {
-    FormPeminjaman view;
-    PeminjamanDao dao;
-    AnggotaDao Adao;
-    BukuDao Bdao;
-    Peminjaman pm = new Peminjaman();
-    Connection con;
-    Buku b = new Buku();
-    
-    public PeminjamanController(FormPeminjaman view){
-        try {
+   private FormPeminjaman view;
+   private AnggotaDao Adao;
+   private BukuDao Bdao;
+   private PeminjamanDao dao;
+   private Peminjaman pm; 
+   private Connection con;
+   
+    public PeminjamanController(FormPeminjaman view)throws Exception{
             this.view = view;
             con = dbHelper.getConnection();
             dao = new PeminjamanDaolmpl(con);
             Adao = new AnggotaDaolmpl(con);
             Bdao = new BukuDaolmpl(con);
-        } catch (SQLException ex) {
-            Logger.getLogger(PeminjamanController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    
-    public void bersih(){
-        try {
-            List<Anggota> Alist = Adao.getAll();
-            List<Buku> Blist = Bdao.getAll();
-            view.getTxtKodePeminjaman().setText("");
-            view.getTxtTglpinjam().setText("");
-            view.getTxtTglKembali().setText("");
-        
-            view.getCboKodeAnggota().removeAllItems();
-            view.getCboKodeBuku().removeAllItems();
-            for(Anggota a : Alist){
-                view.getCboKodeAnggota().addItem(a.getKodeanggota());
-            }
-            
-            for(Buku b : Blist){
-                view.getCboKodeBuku().addItem(b.getKodebuku()); 
-            }
-        } catch (Exception ex) {
-            Logger.getLogger(PeminjamanController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-    }
-    
-    public void pinjam(){
-        try {
             pm = new Peminjaman();
-            LocalDate tanggalSaatIni = LocalDate.now();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-            String tanggalFormatted = tanggalSaatIni.format(formatter);
-            pm.setKodepeminjaman(view.getTxtKodePeminjaman().getText());
-            pm.setKodeAnggota(view.getCboKodeAnggota().getSelectedItem().toString());
-            pm.setKodebuku(view.getCboKodeBuku().getSelectedItem().toString());
-            pm.setTglpinjam(view.getTxtTglpinjam().getText());
-            pm.setTglkembali(tanggalFormatted);
-            System.out.println(tanggalFormatted);
-            dao.pinjam(pm);
-        } catch (Exception ex) {
-            Logger.getLogger(PeminjamanController.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
+    
+    public void bersih()throws Exception, SQLException{
+       List<Buku> Blist = Bdao.getAll();
+       List<Anggota> Alist = Adao.getAll();
+       view.getTxtTglKembali().setText("yyyy-mm-dd");
+       view.getTxtTglpinjam().setText("yyyy-mm-dd");
+       view.getCboKodeAnggota().removeAllItems();
+       view.getCboKodeBuku().removeAllItems();
+       view.getCboKodeAnggota().addItem("");
+       view.getCboKodeBuku().addItem("");
+       
+       for(Anggota a : Alist){
+           view.getCboKodeAnggota().addItem(a.getKodeanggota()+"-"+a.getNamaanggota());
+       }
+       for(Buku b : Blist){
+           view.getCboKodeBuku().addItem(b.getKodebuku()+"-"+b.getJudulbuku());
+       }
+    }
+     
+    
+    public void insert(){
+       try {
+           String[] kodeAnggota = view.getCboKodeAnggota().getSelectedItem().toString().split("-");
+           pm.setKodeAnggota(kodeAnggota[0]);
+           String[] Kodebuku = view.getCboKodeBuku().getSelectedItem().toString().split("-");
+           pm.setKodebuku(Kodebuku[0]);
+           pm.setTglpinjam(view.getTxtTglpinjam().getText());
+           pm.setTglkembali(view.getTxtTglpinjam().getText());
+           dao.insert(pm);
+           JOptionPane.showMessageDialog(view, "Berhasil dimasukkan");
+       } catch (SQLException ex) {
+           Logger.getLogger(PeminjamanController.class.getName()).log(Level.SEVERE, null, ex);
+       }
+ } 
+
     
     public void update(){
         try {
-            pm = new Peminjaman();
-            pm.setKodepeminjaman(view.getTxtKodePeminjaman().getText());
-            pm.setKodeAnggota(view.getCboKodeAnggota().getSelectedItem().toString());
-            pm.setKodebuku(view.getCboKodeBuku().getSelectedItem().toString());
+            pm.setKodeAnggota(view.gettblpeminjaman().getValueAt(view.gettblpeminjaman().getSelectedRow(),0).toString());
+            pm.setKodebuku(view.gettblpeminjaman().getValueAt(view.gettblpeminjaman().getSelectedRow(),1).toString());
             pm.setTglpinjam(view.getTxtTglpinjam().getText());
             pm.setTglkembali(view.getTxtTglKembali().getText());
             dao.update(pm);
+            JOptionPane.showMessageDialog(view, "Update Anda Berhasil");
         } catch (Exception ex) {
             Logger.getLogger(PeminjamanController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
     public void delete(){
-        try {
-            dao.delete(pm);
-            JOptionPane.showMessageDialog(view, "delete okey");
-        } catch (Exception ex) {
-            Logger.getLogger(PeminjamanController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+       try {
+           String[] kodeAnggota = view.getCboKodeAnggota().getSelectedItem().toString().split("-");
+           pm.setKodeAnggota(kodeAnggota[0]);
+           String[] Kodebuku = view.getCboKodeBuku().getSelectedItem().toString().split("-");
+           pm.setKodebuku(Kodebuku[0]);
+           dao.delete(pm);
+           JOptionPane.showMessageDialog(view, "Berhasil dihapuus");
+       } catch (SQLException ex) {
+           Logger.getLogger(PeminjamanController.class.getName()).log(Level.SEVERE, null, ex);
+       }
+       
     }
     
     public void tableklik(){
         try {
-            String Kodepeminjaman = view.gettblpeminjaman().getValueAt(view.gettblpeminjaman().getSelectedRow(), 0).toString();
-            pm = dao.getPeminjaman(Kodepeminjaman);
-            view.getTxtKodePeminjaman().setText(pm.getKodepeminjaman());
-            view.getCboKodeAnggota().setSelectedItem(pm.getKodeAnggota());
-            view.getCboKodeBuku().setSelectedItem(pm.getKodebuku());
-            view.getTxtTglpinjam().setText(pm.getTglpinjam());
+            String Kodebuku = view.gettblpeminjaman().getValueAt(view.gettblpeminjaman().getSelectedRow(), 1).toString();
+            String kodeAnggota = view.gettblpeminjaman().getValueAt(view.gettblpeminjaman().getSelectedRow(), 0).toString();
+            String Tglpinjam = view.gettblpeminjaman().getValueAt(view.gettblpeminjaman().getSelectedRow(), 2).toString();
+            pm = dao.getPeminjaman(kodeAnggota, Kodebuku, Tglpinjam);
+            Anggota anggota = Adao.getAnggota(pm.getKodeAnggota());
+            Buku buku = Bdao.getBuku(pm.getKodebuku());
             view.getTxtTglKembali().setText(pm.getTglkembali());
+            view.getCboKodeAnggota().setSelectedItem(pm.getKodeAnggota()+"-"+anggota.getNamaanggota());
+            view.getCboKodeBuku().setSelectedItem(pm.getKodebuku()+"-"+buku.getJudulbuku());
+            view.getTxtTglpinjam().setText(pm.getTglpinjam());
         } catch (Exception ex) {
             Logger.getLogger(PeminjamanController.class.getName()).log(Level.SEVERE, null, ex);
         }      
     }
     
     public void tampil(){
-        try {
             DefaultTableModel tabelModel =
                     (DefaultTableModel) view.gettblpeminjaman().getModel();
             tabelModel.setRowCount(0);
+        try {
             List<Peminjaman> list = dao.getAll();
             for(Peminjaman p : list){
                 Object[] row = {
-                    p.getKodepeminjaman(),
                     p.getKodeAnggota(),
                     p.getKodebuku(),
                     p.getTglpinjam(),
