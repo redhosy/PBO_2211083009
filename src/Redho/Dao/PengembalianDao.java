@@ -12,9 +12,10 @@ import java.util.List;
  * @author septa
  */
 public interface PengembalianDao {
-    void insert(Pengembalian pengembalian) throws SQLException;
-    void update(Pengembalian pengembalian) throws SQLException;
-    void delete(Pengembalian pengembalian) throws SQLException;
-    Pengembalian getPengembalian(String kodeAnggota)throws SQLException;
+    void insert(Pengembalian pengembalian) throws Exception;
+    void update(Pengembalian pengembalian) throws Exception;
+    void delete(Pengembalian pengembalian) throws Exception;
+    Pengembalian getPengembalian(String kodeAnggota, String Kodebuku, String Tglpinjam)throws Exception;
     List<Pengembalian> getAll()throws SQLException;
+    int selisihtgl(String tgl1, String tgl2) throws Exception;
 }

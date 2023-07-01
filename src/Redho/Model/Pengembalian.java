@@ -4,6 +4,9 @@
  */
 package Redho.Model;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  *
  * @author septa
@@ -14,11 +17,11 @@ public class Pengembalian {
     private String tglpinjam;
     private String tglkembali;
     private int terlambat;
-    private String denda;
+    private double denda;
     
     public Pengembalian(){}
 
-    public Pengembalian(String kodeAnggota, String Kodebuku, String tglpinjam, String tglkembali, int terlambat, String denda) {
+    public Pengembalian(String kodeAnggota, String Kodebuku, String tglpinjam, String tglkembali, int terlambat, double denda) {
         this.kodeAnggota = kodeAnggota;
         this.Kodebuku = Kodebuku;
         this.tglpinjam = tglpinjam;
@@ -40,6 +43,8 @@ public class Pengembalian {
     }
 
     public String getTglkembali() {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd");
+        tglkembali = format.format(new Date());
         return tglkembali;
     }
 
@@ -47,7 +52,7 @@ public class Pengembalian {
         return terlambat;
     }
 
-    public String getDenda() {
+    public double getDenda() {
         return denda;
     }
 
@@ -71,10 +76,7 @@ public class Pengembalian {
         this.terlambat = terlambat;
     }
 
-    public void setDenda(String denda) {
+    public void setDenda(double denda) {
         this.denda = denda;
-    }
-    
-    
-    
+    } 
 }

@@ -191,13 +191,15 @@ public class FormPeminjaman extends javax.swing.JFrame {
         getContentPane().add(jScrollPane1);
         jScrollPane1.setBounds(460, 60, 590, 250);
 
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel6.setText("MASUKKAN DATA");
         getContentPane().add(jLabel6);
-        jLabel6.setBounds(130, 20, 130, 16);
+        jLabel6.setBounds(130, 20, 160, 25);
 
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel7.setText("TABEL PENYIMPANAN ");
         getContentPane().add(jLabel7);
-        jLabel7.setBounds(460, 20, 130, 16);
+        jLabel7.setBounds(460, 20, 170, 20);
 
         setSize(new java.awt.Dimension(1084, 468));
         setLocationRelativeTo(null);
