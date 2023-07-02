@@ -7,9 +7,7 @@ package Redho.Dao;
 import Redho.View.FormPengembalian;
 import java.sql.Connection;
 import Redho.Model.*;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,19 +18,15 @@ import java.util.List;
 public class PengembalianDaolmpl implements PengembalianDao{
     private Connection con;
     private Pengembalian p;
-    private AnggotaDao Adao;
-    private FormPengembalian view;
     
     public PengembalianDaolmpl(Connection con)throws Exception{
         this.con = con;
-        Adao = new AnggotaDaolmpl(con);
-        p = new Pengembalian();
     }
     
     @Override
     public void insert (Pengembalian p) throws Exception{
-        String sql = "insert into pengembalian values(?,?,?,?,?,?)";
-        PreparedStatement ps = con.prepareStatement(sql);
+        String insert = "insert into pengembalian values(?,?,?,?,?,?)";
+        PreparedStatement ps = con.prepareStatement(insert);
         ps.setString(1, p.getKodeAnggota());
         ps.setString(2, p.getKodebuku());
         ps.setString(3, p.getTglpinjam());
@@ -44,22 +38,21 @@ public class PengembalianDaolmpl implements PengembalianDao{
     
     @Override
     public void update (Pengembalian p) throws Exception{
-        String sql = "Update pengembalian SET Tglkembali = ?"
-                +"WHERE kodeAnggota = ? and Kodebuku = ? and Tglpinjam = ?";
-        PreparedStatement ps = con.prepareStatement(sql);
+        String update =  "UPDATE `pengembalian` SET `Tglkembali` = ?, `Terlambat` = ?, `Denda` = ? WHERE `pengembalian`.`kodeAnggota` = ? AND `pengembalian`.`Kodebuku` = ? AND `pengembalian`.`TglPinjam` = ?";
+        PreparedStatement ps = con.prepareStatement(update);
         ps.setString(1, p.getTglkembali());
-        ps.setString(2, p.getKodeAnggota());
-        ps.setString(3, p.getKodebuku());
-        ps.setString(4, p.getTglpinjam());
-        ps.setInt(5, p.getTerlambat());
-        ps.setDouble(6, p.getDenda());
+        ps.setInt(2, p.getTerlambat());
+        ps.setDouble(3, p.getDenda());
+        ps.setString(4, p.getKodeAnggota());
+        ps.setString(5, p.getKodebuku());
+        ps.setString(6, p.getTglpinjam());
         ps.executeUpdate();
     }
     
      @Override
     public void delete(Pengembalian p)throws SQLException{
-        String sql = "DELETE FROM pengembalian WHERE kodeAnggota = ? and Kodebuku = ? and Tglpinjam = ?";
-        PreparedStatement ps = con.prepareStatement(sql);
+        String delete = "DELETE FROM pengembalian WHERE kodeAnggota = ? and Kodebuku = ? and Tglpinjam = ?";
+        PreparedStatement ps = con.prepareStatement(delete);
         ps.setString(1, p.getKodeAnggota());
         ps.setString(2, p.getKodebuku());
         ps.setString(3, p.getTglpinjam());
@@ -68,8 +61,8 @@ public class PengembalianDaolmpl implements PengembalianDao{
     
     public int selisihtgl(String tgl1, String tgl2) throws Exception{
         int selisih = 0;
-        String sql = "select datediff(?,?)as selisih";
-        PreparedStatement ps = con.prepareStatement(sql);
+        String terlambat = "select datediff(?,?)as selisih";
+        PreparedStatement ps = con.prepareStatement(terlambat);
         ps.setString(1,tgl1);
         ps.setString(2,tgl2);
         ResultSet rs = ps.executeQuery();
@@ -96,18 +89,60 @@ public class PengembalianDaolmpl implements PengembalianDao{
         return p;
     }
     
+    @Override
     public List<Pengembalian> getAll()throws SQLException{
-        String sql = "SELECT * FROM pengembalian";
+        String sql = "SELECT anggota.kodeAnggota, anggota.namaAnggota, buku.Kodebuku, buku.Judulbuku, peminjaman.Tglpinjam, peminjaman.Tglkembali, pengembalian.Tglkembali, pengembalian.Terlambat, pengembalian.Denda"
+                +"FROM peminjaman JOIN anggota ON peminjaman.kodeAnggota = anggota.kodeAnggota JOIN buku ON peminjaman.Kodebuku = buku.Kodebuku LEFT JOIN pengembalian ON (Peminjaman.kodeAnggota = pengembalian.kodeAnggota AND Peminjaman.Kodebuku = pengembalian.Kodebuku AND CAST(Peminjaman.Tglpinjam AS DATE) = CAST(pengembalian.Tglpinjam AS DATE))"
+                +"WHERE anggota.kodeAnggota = ?";
         PreparedStatement ps = con.prepareStatement(sql);
         ResultSet rs = ps.executeQuery();
         List<Pengembalian> list = new ArrayList<>();
         while(rs.next()){
+            String Dikembalikan = rs.getString(7);
+            if(Dikembalikan == null ){ 
             p = new Pengembalian();
             p.setKodeAnggota(rs.getString(1));
-            p.setKodebuku(rs.getString(2));
-            p.setTglpinjam(rs.getString(3));
-            p.setTglkembali(rs.getString(4));
+            p.setNamaAnggota(rs.getString(2));
+            p.setKodebuku(rs.getString(3));
+            p.setJudulBuku(rs.getString(4));
+            p.setTglpinjam(rs.getString(5));
+            p.setTglkembali(rs.getString(6));
+            p.setDikembalikan(rs.getString(7));
+            p.setTerlambat(rs.getInt(8));
+            p.setDenda(rs.getDouble(9));
             list.add(p);
+            }
+        }
+        return list;
+    }
+    
+    
+    public List<Pengembalian> cari(String kode)throws Exception{
+        String sql = "SELECT anggota.kodeAnggota, anggota.namaAnggota, buku.Kodebuku, buku.Judulbuku, peminjaman.Tglpinjam, peminjaman.Tglkembali, pengembalian.Tglkembali, pengembalian.Terlambat, pengembalian.Denda\n" +
+                    "FROM peminjaman\n" +
+                    "JOIN anggota ON peminjaman.kodeAnggota = anggota.kodeAnggota\n" +
+                    "JOIN buku ON peminjaman.Kodebuku = buku.Kodebuku\n" +
+                    "LEFT JOIN pengembalian ON (peminjaman.kodeAnggota = pengembalian.kodeAnggota AND peminjaman.Kodebuku = pengembalian.Kodebuku AND CAST(peminjaman.Tglpinjam AS DATE) = CAST(pengembalian.Tglpinjam AS DATE))\n" +
+                    "WHERE anggota.kodeAnggota = ?";
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setString(1, kode);
+        ResultSet rs = ps.executeQuery();
+        List<Pengembalian> list = new ArrayList<>();
+        while(rs.next()){
+            String Dikembalikan = rs.getString(7);
+            if(Dikembalikan == null ){ 
+            p = new Pengembalian();
+            p.setKodeAnggota(rs.getString(1));
+            p.setNamaAnggota(rs.getString(2));
+            p.setKodebuku(rs.getString(3));
+            p.setJudulBuku(rs.getString(4));
+            p.setTglpinjam(rs.getString(5));
+            p.setTglkembali(rs.getString(6));
+            p.setDikembalikan(rs.getString(7));
+            p.setTerlambat(rs.getInt(8));
+            p.setDenda(rs.getDouble(9));
+            list.add(p);
+            }
         }
         return list;
     }
