@@ -38,7 +38,7 @@ public class FormPengembalian extends javax.swing.JFrame {
     }
 
     public JTextField getTxttglpinjam() {
-        return txtcari;
+        return txttglpinjam;
     }
 
     public JTextField getTxtdenda() {
@@ -248,6 +248,7 @@ public class FormPengembalian extends javax.swing.JFrame {
         getContentPane().add(txttglkembali);
         txttglkembali.setBounds(120, 140, 270, 30);
 
+        txttglpinjam.setText("jTextField1");
         txttglpinjam.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 txttglpinjamFocusGained(evt);
@@ -338,12 +339,7 @@ public class FormPengembalian extends javax.swing.JFrame {
     }//GEN-LAST:event_txtcariFocusLost
 
     private void txttglkembaliKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txttglkembaliKeyReleased
-        try {
-            // TODO add your handling code here:
-            con.tanggalDikembalikan();
-        } catch (Exception e) {
-           e.printStackTrace();
-        }
+
     }//GEN-LAST:event_txttglkembaliKeyReleased
 
     private void txtterlambatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtterlambatActionPerformed

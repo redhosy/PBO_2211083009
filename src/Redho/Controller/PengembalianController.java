@@ -194,9 +194,9 @@ public class PengembalianController {
 
     public int tanggalDikembalikan() throws Exception {
         String tglDikembalikan = view.getTxttgldikembalikan().getText();
-        String tanggalkembali = view.getTblpengembalian().getValueAt(view.getTblpengembalian().getSelectedRow(), 5)
+        String Tglkembali = view.getTblpengembalian().getValueAt(view.getTblpengembalian().getSelectedRow(), 6)
                 .toString();
-        int terlambat = pengembalianDao.selisihtgl(tglDikembalikan, tanggalkembali);
+        int terlambat = pengembalianDao.selisihtgl(Tglkembali, tglDikembalikan);
         view.getTxtterlambat().setText("" + terlambat);
         view.getTxttgldikembalikan().setText(tglDikembalikan);
         view.getTxtdenda().setText((String.valueOf(terlambat * 2000)));

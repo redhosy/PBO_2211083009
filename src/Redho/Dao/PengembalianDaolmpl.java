@@ -3,8 +3,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Redho.Dao;
-
-import Redho.View.FormPengembalian;
 import java.sql.Connection;
 import Redho.Model.*;
 import java.sql.*;
@@ -59,6 +57,7 @@ public class PengembalianDaolmpl implements PengembalianDao{
         ps.executeUpdate();
     }
     
+    @Override
     public int selisihtgl(String tgl1, String tgl2) throws Exception{
         int selisih = 0;
         String terlambat = "select datediff(?,?)as selisih";
@@ -67,11 +66,12 @@ public class PengembalianDaolmpl implements PengembalianDao{
         ps.setString(2,tgl2);
         ResultSet rs = ps.executeQuery();
            if(rs.next()){
-            selisih = rs.getInt(selisih);
+            selisih = rs.getInt(1);
         }
         return selisih;
     }
-    
+   
+    @Override
     public Pengembalian getPengembalian (String kodeAnggota, String Kodebuku, String Tglkembali)throws SQLException, Exception {
         String sql = "select * from peminjaman where kodeAnggota= ? and Kodebuku= ? and Tglkembali= ?";
         PreparedStatement ps = con.prepareStatement(sql);
@@ -92,8 +92,7 @@ public class PengembalianDaolmpl implements PengembalianDao{
     @Override
     public List<Pengembalian> getAll()throws SQLException{
         String sql = "SELECT anggota.kodeAnggota, anggota.namaAnggota, buku.Kodebuku, buku.Judulbuku, peminjaman.Tglpinjam, peminjaman.Tglkembali, pengembalian.Tglkembali, pengembalian.Terlambat, pengembalian.Denda"
-                +"FROM peminjaman JOIN anggota ON peminjaman.kodeAnggota = anggota.kodeAnggota JOIN buku ON peminjaman.Kodebuku = buku.Kodebuku LEFT JOIN pengembalian ON (Peminjaman.kodeAnggota = pengembalian.kodeAnggota AND Peminjaman.Kodebuku = pengembalian.Kodebuku AND CAST(Peminjaman.Tglpinjam AS DATE) = CAST(pengembalian.Tglpinjam AS DATE))"
-                +"WHERE anggota.kodeAnggota = ?";
+                +"FROM peminjaman JOIN anggota ON peminjaman.kodeAnggota = anggota.kodeAnggota JOIN buku ON peminjaman.Kodebuku = buku.Kodebuku LEFT JOIN pengembalian ON (Peminjaman.kodeAnggota = pengembalian.kodeAnggota AND Peminjaman.Kodebuku = pengembalian.Kodebuku AND CAST(Peminjaman.Tglpinjam AS DATE) = CAST(pengembalian.Tglpinjam AS DATE))";
         PreparedStatement ps = con.prepareStatement(sql);
         ResultSet rs = ps.executeQuery();
         List<Pengembalian> list = new ArrayList<>();
@@ -116,21 +115,19 @@ public class PengembalianDaolmpl implements PengembalianDao{
         return list;
     }
     
-    
+    @Override
     public List<Pengembalian> cari(String kode)throws Exception{
         String sql = "SELECT anggota.kodeAnggota, anggota.namaAnggota, buku.Kodebuku, buku.Judulbuku, peminjaman.Tglpinjam, peminjaman.Tglkembali, pengembalian.Tglkembali, pengembalian.Terlambat, pengembalian.Denda\n" +
                     "FROM peminjaman\n" +
                     "JOIN anggota ON peminjaman.kodeAnggota = anggota.kodeAnggota\n" +
                     "JOIN buku ON peminjaman.Kodebuku = buku.Kodebuku\n" +
                     "LEFT JOIN pengembalian ON (peminjaman.kodeAnggota = pengembalian.kodeAnggota AND peminjaman.Kodebuku = pengembalian.Kodebuku AND CAST(peminjaman.Tglpinjam AS DATE) = CAST(pengembalian.Tglpinjam AS DATE))\n" +
-                    "WHERE anggota.kodeAnggota = ?";
+                    "WHERE anggota.kodeAnggota like \'%"+kode+"%\'";
         PreparedStatement ps = con.prepareStatement(sql);
-        ps.setString(1, kode);
+//      ps.setString(1, kode);
         ResultSet rs = ps.executeQuery();
         List<Pengembalian> list = new ArrayList<>();
         while(rs.next()){
-            String Dikembalikan = rs.getString(7);
-            if(Dikembalikan == null ){ 
             p = new Pengembalian();
             p.setKodeAnggota(rs.getString(1));
             p.setNamaAnggota(rs.getString(2));
@@ -142,7 +139,6 @@ public class PengembalianDaolmpl implements PengembalianDao{
             p.setTerlambat(rs.getInt(8));
             p.setDenda(rs.getDouble(9));
             list.add(p);
-            }
         }
         return list;
     }
