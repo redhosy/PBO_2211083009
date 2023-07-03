@@ -339,7 +339,11 @@ public class FormPengembalian extends javax.swing.JFrame {
     }//GEN-LAST:event_txtcariFocusLost
 
     private void txttglkembaliKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txttglkembaliKeyReleased
-
+        try {
+            con.tanggalDikembalikan();
+        } catch (Exception ex) {
+            Logger.getLogger(FormPengembalian.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_txttglkembaliKeyReleased
 
     private void txtterlambatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtterlambatActionPerformed

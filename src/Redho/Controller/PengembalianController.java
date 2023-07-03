@@ -92,7 +92,7 @@ public class PengembalianController {
             kembali.setTerlambat(Integer.parseInt(view.getTxtterlambat().getText()));
             kembali.setDenda(Double.parseDouble(view.getTxtdenda().getText()));
             pengembalianDao.update(kembali);
-            JOptionPane.showMessageDialog(view, "Berhasil Kembalikan Buku.");
+            JOptionPane.showMessageDialog(view, "Berhasil update Buku.");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(view, "Tidak bisa melakukan pengembalian!", null, 0);
         }
@@ -106,7 +106,7 @@ public class PengembalianController {
             kembali.setTglpinjam(view.getTblpengembalian().getValueAt(view.getTblpengembalian().getSelectedRow(), 4)
                     .toString());
             pengembalianDao.delete(kembali);
-            JOptionPane.showMessageDialog(view, "Data pengembalian berhasil dihapus!", null, 2);
+            JOptionPane.showMessageDialog(view, "Data pengembalian dihapus!", null, 2);
         } catch (Exception e) {
             // TODO: handle exception
         }
@@ -159,7 +159,8 @@ public class PengembalianController {
                 tableModel.addRow(data);
             }
         } catch (Exception e) {
-            // TODO: handle exception
+            // DO: handle exception
+            JOptionPane.showMessageDialog(view, e);
         }
     }
 
@@ -194,9 +195,12 @@ public class PengembalianController {
 
     public int tanggalDikembalikan() throws Exception {
         String tglDikembalikan = view.getTxttgldikembalikan().getText();
-        String Tglkembali = view.getTblpengembalian().getValueAt(view.getTblpengembalian().getSelectedRow(), 6)
+        String Tglkembali = view.getTblpengembalian().getValueAt(view.getTblpengembalian().getSelectedRow(), 5)
                 .toString();
-        int terlambat = pengembalianDao.selisihtgl(Tglkembali, tglDikembalikan);
+        int terlambat = pengembalianDao.selisihtgl(tglDikembalikan, Tglkembali);
+        if(terlambat <= 0){
+            terlambat = 0;
+        }
         view.getTxtterlambat().setText("" + terlambat);
         view.getTxttgldikembalikan().setText(tglDikembalikan);
         view.getTxtdenda().setText((String.valueOf(terlambat * 2000)));

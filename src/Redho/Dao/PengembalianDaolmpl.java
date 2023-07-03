@@ -91,14 +91,13 @@ public class PengembalianDaolmpl implements PengembalianDao{
     
     @Override
     public List<Pengembalian> getAll()throws SQLException{
-        String sql = "SELECT anggota.kodeAnggota, anggota.namaAnggota, buku.Kodebuku, buku.Judulbuku, peminjaman.Tglpinjam, peminjaman.Tglkembali, pengembalian.Tglkembali, pengembalian.Terlambat, pengembalian.Denda"
-                +"FROM peminjaman JOIN anggota ON peminjaman.kodeAnggota = anggota.kodeAnggota JOIN buku ON peminjaman.Kodebuku = buku.Kodebuku LEFT JOIN pengembalian ON (Peminjaman.kodeAnggota = pengembalian.kodeAnggota AND Peminjaman.Kodebuku = pengembalian.Kodebuku AND CAST(Peminjaman.Tglpinjam AS DATE) = CAST(pengembalian.Tglpinjam AS DATE))";
+        String sql =  "SELECT anggota.kodeAnggota, anggota.namaAnggota, buku.Kodebuku, buku.Judulbuku, peminjaman.TglPinjam, peminjaman.Tglkembali, pengembalian.Tglkembali, pengembalian.Terlambat, pengembalian.Denda "
+                +"FROM peminjaman JOIN anggota ON peminjaman.kodeAnggota = anggota.kodeAnggota JOIN buku ON peminjaman.Kodebuku = buku.Kodebuku "
+                +"LEFT JOIN pengembalian ON (peminjaman.kodeAnggota = pengembalian.KodeAnggota AND peminjaman.Kodebuku = pengembalian.Kodebuku AND CAST(peminjaman.TglPinjam AS DATE) = CAST(pengembalian.TglPinjam AS DATE))";
         PreparedStatement ps = con.prepareStatement(sql);
         ResultSet rs = ps.executeQuery();
         List<Pengembalian> list = new ArrayList<>();
         while(rs.next()){
-            String Dikembalikan = rs.getString(7);
-            if(Dikembalikan == null ){ 
             p = new Pengembalian();
             p.setKodeAnggota(rs.getString(1));
             p.setNamaAnggota(rs.getString(2));
@@ -110,7 +109,6 @@ public class PengembalianDaolmpl implements PengembalianDao{
             p.setTerlambat(rs.getInt(8));
             p.setDenda(rs.getDouble(9));
             list.add(p);
-            }
         }
         return list;
     }

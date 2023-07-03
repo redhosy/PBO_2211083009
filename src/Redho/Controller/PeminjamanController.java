@@ -42,8 +42,8 @@ public class PeminjamanController {
     public void bersih()throws Exception, SQLException{
        List<Buku> Blist = Bdao.getAll();
        List<Anggota> Alist = Adao.getAll();
-       view.getTxtTglKembali().setText("yyyy-mm-dd");
-       view.getTxtTglpinjam().setText("yyyy-mm-dd");
+       view.getTxtTglKembali().setText("yyyy-MM-dd");
+       view.getTxtTglpinjam().setText("yyyy-MM-dd");
        view.getCboKodeAnggota().removeAllItems();
        view.getCboKodeBuku().removeAllItems();
        view.getCboKodeAnggota().addItem("");
@@ -65,7 +65,7 @@ public class PeminjamanController {
            String[] Kodebuku = view.getCboKodeBuku().getSelectedItem().toString().split("-");
            pm.setKodebuku(Kodebuku[0]);
            pm.setTglpinjam(view.getTxtTglpinjam().getText());
-           pm.setTglkembali(view.getTxtTglpinjam().getText());
+           pm.setTglkembali(view.getTxtTglKembali().getText());
            dao.insert(pm);
            JOptionPane.showMessageDialog(view, "Berhasil dimasukkan");
        } catch (SQLException ex) {

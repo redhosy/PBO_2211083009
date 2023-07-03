@@ -57,8 +57,6 @@ public class Pengembalian{
     }
 
     public String getTglkembali() {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd");
-        tglkembali = format.format(new Date());
         return tglkembali;
     }
 
