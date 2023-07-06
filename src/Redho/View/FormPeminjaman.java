@@ -133,7 +133,7 @@ public class FormPeminjaman extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btninsert);
-        btninsert.setBounds(130, 230, 72, 23);
+        btninsert.setBounds(460, 280, 72, 23);
 
         btnupdate.setText("Update");
         btnupdate.addActionListener(new java.awt.event.ActionListener() {
@@ -142,7 +142,7 @@ public class FormPeminjaman extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btnupdate);
-        btnupdate.setBounds(130, 280, 72, 23);
+        btnupdate.setBounds(130, 240, 72, 23);
 
         btndelete.setText("Delete");
         btndelete.addActionListener(new java.awt.event.ActionListener() {
@@ -151,7 +151,7 @@ public class FormPeminjaman extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btndelete);
-        btndelete.setBounds(220, 280, 72, 23);
+        btndelete.setBounds(220, 240, 72, 23);
 
         btncancel.setText("Cancel");
         btncancel.addActionListener(new java.awt.event.ActionListener() {
@@ -160,7 +160,7 @@ public class FormPeminjaman extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btncancel);
-        btncancel.setBounds(310, 280, 72, 23);
+        btncancel.setBounds(310, 240, 72, 23);
 
         tblpeminjaman.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -189,7 +189,7 @@ public class FormPeminjaman extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tblpeminjaman);
 
         getContentPane().add(jScrollPane1);
-        jScrollPane1.setBounds(460, 60, 590, 250);
+        jScrollPane1.setBounds(460, 60, 590, 210);
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel6.setText("MASUKKAN DATA");

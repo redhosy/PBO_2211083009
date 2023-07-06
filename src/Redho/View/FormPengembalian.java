@@ -26,7 +26,7 @@ public class FormPengembalian extends javax.swing.JFrame {
         initComponents();
         con = new PengembalianController(this);
         con.bersih();
-        con.tampil();
+        con.tampil();  
     }
 
     public JComboBox<String> getCbokodeanggota() {
@@ -35,6 +35,10 @@ public class FormPengembalian extends javax.swing.JFrame {
 
     public JComboBox<String> getCbokodebuku() {
         return cbokodebuku;
+    }
+
+    public JComboBox<String> getCbopilih() {
+        return cbopilih;
     }
 
     public JTextField getTxttglpinjam() {
@@ -99,6 +103,7 @@ public class FormPengembalian extends javax.swing.JFrame {
         txttglkembali = new javax.swing.JTextField();
         txttglpinjam = new javax.swing.JTextField();
         btncancel1 = new javax.swing.JButton();
+        cbopilih = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
@@ -154,7 +159,7 @@ public class FormPengembalian extends javax.swing.JFrame {
             }
         });
         getContentPane().add(txtcari);
-        txtcari.setBounds(410, 40, 270, 30);
+        txtcari.setBounds(560, 40, 270, 30);
 
         txtterlambat.setText("jTextField1");
         txtterlambat.addActionListener(new java.awt.event.ActionListener() {
@@ -219,7 +224,7 @@ public class FormPengembalian extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btncari);
-        btncari.setBounds(690, 40, 60, 23);
+        btncari.setBounds(850, 40, 60, 30);
 
         btnkembalikan.setText("Kembalikan");
         btnkembalikan.addActionListener(new java.awt.event.ActionListener() {
@@ -273,6 +278,10 @@ public class FormPengembalian extends javax.swing.JFrame {
         });
         getContentPane().add(btncancel1);
         btncancel1.setBounds(210, 260, 72, 23);
+
+        cbopilih.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "KodeAnggota", "NamaAnggota", "KodeBuku" }));
+        getContentPane().add(cbopilih);
+        cbopilih.setBounds(410, 40, 140, 30);
 
         setSize(new java.awt.Dimension(1324, 445));
         setLocationRelativeTo(null);
@@ -415,6 +424,7 @@ public class FormPengembalian extends javax.swing.JFrame {
     private javax.swing.JButton btnupdate;
     private javax.swing.JComboBox<String> cbokodeanggota;
     private javax.swing.JComboBox<String> cbokodebuku;
+    private javax.swing.JComboBox<String> cbopilih;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

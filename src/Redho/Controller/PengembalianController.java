@@ -56,13 +56,12 @@ public class PengembalianController {
                view.getCbokodebuku().addItem(buku.getKodebuku());
            }
            view.getCbokodeanggota().setSelectedIndex(0);
-           
+
            view.getTxttglpinjam().setText("");
            view.getTxttgldikembalikan().setText("");
            view.getTxtcari().setText("");
            view.getTxtterlambat().setText("");
            view.getTxtdenda().setText("");
-           
        } catch (Exception ex) {
            Logger.getLogger(PengembalianController.class.getName()).log(Level.SEVERE, null, ex);
        }
@@ -166,12 +165,27 @@ public class PengembalianController {
 
     public void Cari() {
         try {
-            String kode = view.getTxtcari().getText();
+            String kode = view.getCbopilih().getSelectedItem().toString();
+            String cari = view.getTxtcari().getText();
             DefaultTableModel tableModel = (DefaultTableModel) view.getTblpengembalian().getModel();
             tableModel.setRowCount(0);
-            List<Pengembalian> List = pengembalianDao.cari(kode);
+            if(kode == "KodeAnggota"){
+                kode = "anggota.KodeAnggota";
+            }else if(kode == "KodeBuku"){
+                kode = "buku.Kodebuku";
+            }else{
+                kode = "anggota.namaAnggota";
+            }
+            List<Pengembalian> List = pengembalianDao.cari(kode, cari);
             if (List.isEmpty()) {
-                JOptionPane.showMessageDialog(view, "Kode Anggota '" + kode + "' Tidak dapat ditemukan");
+             if (kode.equals("anggota.kodeAnggota")) {
+                JOptionPane.showMessageDialog(view, "KodeAnggota '" + cari + "' Tidak dapat ditemukan"); 
+            } else if (kode.equals("buku.KodeBuku")) {
+                JOptionPane.showMessageDialog(view, "Kodebuku '" + cari + "' Tidak dapat ditemukan");   
+            } else {
+                JOptionPane.showMessageDialog(view, "NamaAnggota '" + cari + "' Tidak dapat ditemukan");   
+            }
+
             } else {
                 for (Pengembalian kembali : List) {
                     Object[] data = {

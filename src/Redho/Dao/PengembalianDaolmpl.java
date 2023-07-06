@@ -114,13 +114,13 @@ public class PengembalianDaolmpl implements PengembalianDao{
     }
     
     @Override
-    public List<Pengembalian> cari(String kode)throws Exception{
+    public List<Pengembalian> cari(String kode, String cari)throws Exception{
         String sql = "SELECT anggota.kodeAnggota, anggota.namaAnggota, buku.Kodebuku, buku.Judulbuku, peminjaman.Tglpinjam, peminjaman.Tglkembali, pengembalian.Tglkembali, pengembalian.Terlambat, pengembalian.Denda\n" +
                     "FROM peminjaman\n" +
                     "JOIN anggota ON peminjaman.kodeAnggota = anggota.kodeAnggota\n" +
                     "JOIN buku ON peminjaman.Kodebuku = buku.Kodebuku\n" +
                     "LEFT JOIN pengembalian ON (peminjaman.kodeAnggota = pengembalian.kodeAnggota AND peminjaman.Kodebuku = pengembalian.Kodebuku AND CAST(peminjaman.Tglpinjam AS DATE) = CAST(pengembalian.Tglpinjam AS DATE))\n" +
-                    "WHERE anggota.kodeAnggota like \'%"+kode+"%\'";
+                    "WHERE "+kode+" like '%"+cari+"%'";
         PreparedStatement ps = con.prepareStatement(sql);
 //      ps.setString(1, kode);
         ResultSet rs = ps.executeQuery();

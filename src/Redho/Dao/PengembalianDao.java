@@ -18,5 +18,5 @@ public interface PengembalianDao {
     Pengembalian getPengembalian(String kodeAnggota, String Kodebuku, String Tglpinjam)throws Exception;
     List<Pengembalian> getAll()throws SQLException;
     int selisihtgl(String tgl1, String tgl2) throws Exception;
-    List<Pengembalian> cari(String kode) throws Exception;
+    List<Pengembalian> cari(String kode, String cari) throws Exception;
 }
