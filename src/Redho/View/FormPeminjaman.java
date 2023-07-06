@@ -74,6 +74,7 @@ public class FormPeminjaman extends javax.swing.JFrame {
         tblpeminjaman = new javax.swing.JTable();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
+        btnakses = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
@@ -201,6 +202,15 @@ public class FormPeminjaman extends javax.swing.JFrame {
         getContentPane().add(jLabel7);
         jLabel7.setBounds(460, 20, 170, 20);
 
+        btnakses.setText("Kembalikan Buku");
+        btnakses.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnaksesActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnakses);
+        btnakses.setBounds(560, 280, 130, 23);
+
         setSize(new java.awt.Dimension(1084, 468));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
@@ -280,6 +290,18 @@ public class FormPeminjaman extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_txttglkembaliFocusLost
 
+    private void btnaksesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnaksesActionPerformed
+        // TODO add your handling code here:
+        FormPengembalian fp = null;
+        try {
+            fp = new FormPengembalian();
+        } catch (Exception ex) {
+            Logger.getLogger(FormPeminjaman.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        fp.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnaksesActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -316,6 +338,7 @@ public class FormPeminjaman extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnakses;
     private javax.swing.JButton btncancel;
     private javax.swing.JButton btndelete;
     private javax.swing.JButton btninsert;

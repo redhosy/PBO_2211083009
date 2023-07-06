@@ -104,6 +104,7 @@ public class FormPengembalian extends javax.swing.JFrame {
         txttglpinjam = new javax.swing.JTextField();
         btncancel1 = new javax.swing.JButton();
         cbopilih = new javax.swing.JComboBox<>();
+        btnpinjamlgi = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
@@ -283,6 +284,15 @@ public class FormPengembalian extends javax.swing.JFrame {
         getContentPane().add(cbopilih);
         cbopilih.setBounds(410, 40, 140, 30);
 
+        btnpinjamlgi.setText("Pinjam Lagi ?");
+        btnpinjamlgi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnpinjamlgiActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnpinjamlgi);
+        btnpinjamlgi.setBounds(530, 310, 110, 23);
+
         setSize(new java.awt.Dimension(1324, 445));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
@@ -377,6 +387,13 @@ public class FormPengembalian extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_txttglpinjamFocusLost
 
+    private void btnpinjamlgiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnpinjamlgiActionPerformed
+        // TODO add your handling code here:
+        FormPeminjaman fp = new FormPeminjaman();
+        fp.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnpinjamlgiActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -421,6 +438,7 @@ public class FormPengembalian extends javax.swing.JFrame {
     private javax.swing.JButton btncari;
     private javax.swing.JButton btndelete;
     private javax.swing.JButton btnkembalikan;
+    private javax.swing.JButton btnpinjamlgi;
     private javax.swing.JButton btnupdate;
     private javax.swing.JComboBox<String> cbokodeanggota;
     private javax.swing.JComboBox<String> cbokodebuku;
