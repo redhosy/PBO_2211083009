@@ -16,7 +16,6 @@ public class PelangganController {
     private PelangganDao pelangganDao;
     private Pelanggan pelanggan;
     private WarnetDaolmpl warnetDaolmpl;
-    
     private Warnet warnet;
     
     public PelangganController(FormWarnet formwarnet){
